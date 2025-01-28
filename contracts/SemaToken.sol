@@ -21,18 +21,18 @@ contract SemaToken is ERC20, AccessControl {
 
     /**
      * @dev Constructor sets up initial roles and can mint an initial supply if desired.
-     *      Adjust {name} and {symbol} to match your token branding.
+     * 
      */
     constructor(
-        string memory SemaToken, 
-        string memory $Sema, 
+        string memory name, 
+        string memory symbol, 
         address adminAddress
     ) ERC20(name, symbol) {
         // Grant the contract deployer the admin role
-        _setupRole(ADMIN_ROLE, adminAddress);
+        _grantRole(ADMIN_ROLE, adminAddress);
 
         // Optional: The admin might also be a minter
-        _setupRole(MINTER_ROLE, adminAddress);
+        _grantRole(MINTER_ROLE, adminAddress);
 
         // Set admin role as the role-admin for all roles
         _setRoleAdmin(MINTER_ROLE, ADMIN_ROLE);
@@ -60,11 +60,11 @@ contract SemaToken is ERC20, AccessControl {
         _burn(_msgSender(), amount);
     }
 
-    // If you want to pause/unpause token transfers (optional):
+    // If pausing/unpause token transfers:
     // function pause() external onlyRole(PAUSER_ROLE) { _pause(); }
     // function unpause() external onlyRole(PAUSER_ROLE) { _unpause(); }
 
-    // If you want to restrict transfers in certain cases:
+    // If restricting transfers in certain cases:
     // function _beforeTokenTransfer(address from, address to, uint256 amount)
     //     internal
     //     whenNotPaused
