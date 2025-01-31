@@ -1,0 +1,172 @@
+Current Frontend Architecture:
+
+React + TypeScript: Core framework for UI components
+React Router: Handles navigation between pages
+Tailwind CSS: Styling and responsive design
+Lucide Icons: Icon components
+Required Backend Integration:
+
+Authentication System
+
+// Current: No auth
+// Needed: Twitter OAuth + Wallet Connection
+interface AuthState {
+  twitterHandle: string;
+  walletAddress: string;
+  isAuthenticated: boolean;
+}
+Database Layer (Supabase)
+
+-- Required Tables
+CREATE TABLE users (
+  id UUID PRIMARY KEY,
+  twitter_handle TEXT UNIQUE,
+  wallet_address TEXT,
+  created_at TIMESTAMP WITH TIME ZONE
+);
+
+CREATE TABLE tweets (
+  id UUID PRIMARY KEY,
+  user_id UUID REFERENCES users(id),
+  content TEXT,
+  tweet_id TEXT UNIQUE,
+  likes INT,
+  retweets INT,
+  comments INT,
+  created_at TIMESTAMP WITH TIME ZONE
+);
+
+CREATE TABLE token_distributions (
+  id UUID PRIMARY KEY,
+  tweet_id UUID REFERENCES tweets(id),
+  recipient_id UUID REFERENCES users(id),
+  amount DECIMAL,
+  transaction_hash TEXT,
+  status TEXT,
+  created_at TIMESTAMP WITH TIME ZONE
+);
+API Integration Points:
+
+// API Endpoints Needed
+interface APIEndpoints {
+  // Authentication
+  '/auth/twitter': 'Twitter OAuth flow',
+  '/auth/wallet': 'Wallet connection',
+  
+  // Tweet Management
+  '/tweets': 'CRUD operations for tweets',
+  '/tweets/:id/engagement': 'Get engagement metrics',
+  
+  // Token Distribution
+  '/tokens/distribute': 'Handle token distribution',
+  '/tokens/balance': 'Get token balance',
+  '/tokens/transactions': 'Get transaction history',
+  
+  // Leaderboard
+  '/leaderboard': 'Get top contributors'
+}
+Web3 Integration:
+
+// Required for Wallet.tsx
+interface Web3Integration {
+  connectWallet(): Promise<string>; // Connect wallet
+  getBalance(): Promise<number>; // Get SEMA balance
+  distributeTokens(recipient: string, amount: number): Promise<string>; // Send tokens
+  swapTokens(amount: number, fromToken: string, toToken: string): Promise<string>; // Token swap
+}
+Integration Steps:
+
+Setup Backend API:
+
+// src/api/index.ts
+import axios from 'axios';
+
+const api = axios.create({
+  baseURL: process.env.VITE_API_URL
+});
+
+export const tweetAPI = {
+  getEngagement: async (tweetId: string) => {
+    return api.get(`/tweets/${tweetId}/engagement`);
+  },
+  distributeTokens: async (tweetId: string, amount: number) => {
+    return api.post(`/tokens/distribute`, { tweetId, amount });
+  }
+};
+State Management:
+
+// src/store/index.ts
+interface AppState {
+  auth: AuthState;
+  tweets: Tweet[];
+  transactions: Transaction[];
+  wallet: WalletState;
+}
+Update Components:
+
+// Example: Dashboard.tsx with API integration
+function Dashboard() {
+  const [tweets, setTweets] = useState<Tweet[]>([]);
+  
+  useEffect(() => {
+    // Fetch tweets and engagement
+    const fetchTweets = async () => {
+      const response = await api.get('/tweets');
+      setTweets(response.data);
+    };
+    fetchTweets();
+  }, []);
+
+  const handleDistribute = async (tweetId: string, amount: number) => {
+    try {
+      // 1. Connect wallet if not connected
+      if (!walletConnected) {
+        await connectWallet();
+      }
+      
+      // 2. Call distribution API
+      const response = await tweetAPI.distributeTokens(tweetId, amount);
+      
+      // 3. Update UI with transaction status
+      updateTransactionStatus(response.data.transactionHash);
+    } catch (error) {
+      handleError(error);
+    }
+  };
+}
+Web3 Integration:
+
+// src/web3/index.ts
+import { Connection, PublicKey } from '@solana/web3.js';
+
+export class Web3Service {
+  private connection: Connection;
+  
+  constructor() {
+    this.connection = new Connection(process.env.VITE_SOLANA_RPC_URL);
+  }
+  
+  async distributeTokens(recipientAddress: string, amount: number) {
+    // Implement token distribution logic
+  }
+  
+  async getBalance(address: string) {
+    // Implement balance check
+  }
+}
+Required Environment Variables:
+
+
+VITE_API_URL=http://localhost:3000
+VITE_SOLANA_RPC_URL=https://api.mainnet-beta.solana.com
+VITE_TWITTER_CLIENT_ID=your_twitter_client_id
+To complete the integration:
+
+Create a Node.js/Express backend API
+Set up Supabase database
+Implement Twitter OAuth
+Add Solana Web3 integration
+Create API endpoints for all features
+Add error handling and loading states
+Implement proper state management
+Add WebSocket for real-time updates
