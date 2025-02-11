@@ -10,9 +10,9 @@ import { Settings } from './pages/Settings';
 function App() {
   return (
     <Router>
-      <div className="flex min-h-screen bg-[#121826] text-white">
+      <div className="flex flex-col lg:flex-row min-h-screen bg-[#121826] text-white">
         <Sidebar />
-        <main className="flex-1">
+        <main className="flex-1 w-full lg:w-auto overflow-x-hidden overflow-y-auto pt-16 lg:pt-0">
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/transactions" element={<Transactions />} />
@@ -26,4 +26,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
