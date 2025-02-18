@@ -4,9 +4,13 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  color-scheme: dark;
+}
+
 body {
   font-family: 'Inter', sans-serif;
-  @apply antialiased;
+  @apply antialiased bg-[#121826] text-white min-h-screen overflow-x-hidden;
 }
 
 /* Custom scrollbar */
@@ -35,4 +39,25 @@ body {
 /* Button hover effect */
 .hover-glow:hover {
   box-shadow: 0 0 20px rgba(42, 255, 107, 0.3);
+}
+
+/* Fix for mobile color scheme */
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}
+
+/* Fix for mobile table scrolling */
+.table-scroll-container {
+  @apply -mx-4 md:mx-0 overflow-x-auto;
+}
+
+.table-scroll-container > div {
+  @apply min-w-[600px] md:w-full px-4 md:px-0;
+}
+
+/* Prevent body scroll when mobile menu is open */
+body.menu-open {
+  @apply overflow-hidden;
 }
