@@ -13,16 +13,15 @@ export function DistributionModal({ isOpen, onClose, tweetContent }: Distributio
   if (!isOpen) return null;
 
   const handleDistribute = () => {
-    // Here you would integrate with your Web3 wallet to send tokens
     console.log(`Distributing ${amount} SEMA tokens for tweet: ${tweetContent}`);
     onClose();
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-[#121826] rounded-xl p-6 max-w-md w-full border border-gray-800">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+      <div className="bg-[#121826] rounded-xl p-4 md:p-6 max-w-md w-full border border-gray-800">
         <div className="flex justify-between items-center mb-4">
-          <h3 className="text-xl font-bold">Distribute SEMA Tokens</h3>
+          <h3 className="text-lg md:text-xl font-bold text-white">Distribute SEMA Tokens</h3>
           <button 
             onClick={onClose} 
             className="text-gray-400 hover:text-white"
@@ -33,12 +32,12 @@ export function DistributionModal({ isOpen, onClose, tweetContent }: Distributio
         </div>
         
         <div className="mb-6">
-          <p className="text-gray-400 text-sm mb-2">Tweet</p>
-          <p className="text-white bg-gray-900/50 p-3 rounded-lg">{tweetContent}</p>
+          <p className="text-gray-400 text-xs md:text-sm mb-2">Tweet</p>
+          <p className="text-white bg-gray-900/50 p-3 rounded-lg text-sm">{tweetContent}</p>
         </div>
 
         <div className="mb-6">
-          <label htmlFor="token-amount" className="block text-gray-400 text-sm mb-2">
+          <label htmlFor="token-amount" className="block text-gray-400 text-xs md:text-sm mb-2">
             Amount of SEMA tokens
           </label>
           <input
@@ -46,13 +45,13 @@ export function DistributionModal({ isOpen, onClose, tweetContent }: Distributio
             type="number"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
-            className="w-full bg-gray-900/50 border border-gray-800 rounded-lg px-4 py-2 text-white focus:border-[#2AFF6B] focus:outline-none"
+            className="w-full bg-gray-900/50 border border-gray-800 rounded-lg px-4 py-2 text-white focus:border-[#2AFF6B] focus:outline-none text-sm md:text-base"
           />
         </div>
 
         <button
           onClick={handleDistribute}
-          className="w-full px-4 py-3 bg-gradient-to-r from-[#0072FF] to-[#00E5FF] rounded-lg font-medium hover:opacity-90 transition-opacity"
+          className="w-full px-4 py-3 bg-gradient-to-r from-[#0072FF] to-[#00E5FF] rounded-lg font-medium hover:opacity-90 transition-opacity text-white text-sm md:text-base"
         >
           Confirm Distribution
         </button>
