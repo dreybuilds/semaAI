@@ -43,6 +43,52 @@ const engagementTypes = {
     SERVER_BOOSTING: { type: 'Server Boosting', weight: 25 },
 };
 
+// Rate limiting for Discord interactions
+const rateLimitMap = new Map(); // Store user request timestamps
+const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute window
+const RATE_LIMIT_MAX_REQUESTS = 5; // Max 5 requests per window
+
+// Rate limiting for Mistral API calls
+const mistralRateLimitMap = new Map();
+const MISTRAL_RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute window
+const MISTRAL_RATE_LIMIT_MAX_REQUESTS = 10; // Max 10 requests per window
+
+// Function to check rate limit for Discord interactions
+function checkRateLimit(userId) {
+    const now = Date.now();
+    const userTimestamps = rateLimitMap.get(userId) || [];
+
+    // Filter timestamps within the current window
+    const recentTimestamps = userTimestamps.filter(timestamp => now - timestamp < RATE_LIMIT_WINDOW);
+
+    if (recentTimestamps.length >= RATE_LIMIT_MAX_REQUESTS) {
+        return false; // Rate limit exceeded
+    }
+
+    // Add the current timestamp
+    recentTimestamps.push(now);
+    rateLimitMap.set(userId, recentTimestamps);
+    return true; // Within rate limit
+}
+
+// Function to check rate limit for Mistral API calls
+function checkMistralRateLimit(userId) {
+    const now = Date.now();
+    const userTimestamps = mistralRateLimitMap.get(userId) || [];
+
+    // Filter timestamps within the current window
+    const recentTimestamps = userTimestamps.filter(timestamp => now - timestamp < MISTRAL_RATE_LIMIT_WINDOW);
+
+    if (recentTimestamps.length >= MISTRAL_RATE_LIMIT_MAX_REQUESTS) {
+        return false; // Rate limit exceeded
+    }
+
+    // Add the current timestamp
+    recentTimestamps.push(now);
+    mistralRateLimitMap.set(userId, recentTimestamps);
+    return true; // Within rate limit
+}
+
 // Function to initialize the database schema
 async function initializeDatabase() {
     try {
@@ -158,6 +204,13 @@ function startBot() {
         if (message.author.bot) return;
 
         const userId = message.author.id;
+
+        // Check rate limit for Discord interactions
+        if (!checkRateLimit(userId)) {
+            message.reply('You are sending messages too quickly. Please wait a moment and try again.');
+            return;
+        }
+
         const username = message.author.username;
         const content = message.content;
         const channelId = message.channel.id;
@@ -205,6 +258,12 @@ function startBot() {
         if (user.bot) return;
 
         const userId = user.id;
+
+        // Check rate limit for Discord interactions
+        if (!checkRateLimit(userId)) {
+            return; // Silently ignore if rate limit is exceeded
+        }
+
         const username = user.username;
         const channelId = reaction.message.channel.id;
         const channelName = reaction.message.channel.name;
@@ -241,6 +300,15 @@ function startBot() {
 // Function to rate the relevance of a message using Mistral API
 async function rateRelevance(groupDescription, userInput, user, chatId, groupName, userId) {
     try {
+        // Check Mistral API rate limit
+        if (!checkMistralRateLimit(userId)) {
+            console.log('Mistral API rate limit exceeded for user:', userId);
+            return {
+                relevanceScore: 0,
+                aiResponse: 'Rate limit exceeded. Please try again later.',
+            };
+        }
+
         const chatResponse = await mistralClient.chat.complete({
             model: 'mistral-large-latest', // Use latest Mistral model
             messages: [
@@ -313,7 +381,7 @@ async function saveToDatabase(data) {
         // Insert into engagements table
         await pgClient.query(`
             INSERT INTO engagements (app_id, platform_id, engagement_type_id, content, relevance_score, channel_topic)
-            VALUES ($1, $2, $3, $4, $5, $6, $7);
+            VALUES ($1, $2, $3, $4, $5, $6);
         `, [appId, platformId, engagementTypeId, content, relevanceScore, channelTopic]);
 
         // Update engagement_scores table
