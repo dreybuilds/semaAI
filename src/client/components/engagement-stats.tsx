@@ -1,15 +1,6 @@
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-} from 'recharts';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 // Mock data for demonstration
@@ -48,17 +39,6 @@ export function EngagementStats() {
 
           <TabsContent value="discord">
             <div className="space-y-4">
-              <div className="h-[300px]">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={discordData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Bar dataKey="points" fill="hsl(var(--primary))" />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
               <div className="grid gap-4">
                 {discordData.map((server) => (
                   <Card key={server.name}>
@@ -84,17 +64,6 @@ export function EngagementStats() {
 
           <TabsContent value="telegram">
             <div className="space-y-4">
-              <div className="h-[300px]">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={telegramData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Bar dataKey="points" fill="hsl(var(--primary))" />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
               <div className="grid gap-4">
                 {telegramData.map((group) => (
                   <Card key={group.name}>
@@ -120,17 +89,6 @@ export function EngagementStats() {
 
           <TabsContent value="twitter">
             <div className="space-y-4">
-              <div className="h-[300px]">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={twitterData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Bar dataKey="points" fill="hsl(var(--primary))" />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
               <div className="grid gap-4">
                 {twitterData.map((activity) => (
                   <Card key={activity.name}>

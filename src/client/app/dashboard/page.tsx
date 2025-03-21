@@ -14,7 +14,7 @@ import { Brain, LogOut } from 'lucide-react';
 
 export default function Dashboard() {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState('exchange');
+  const [activeTab, setActiveTab] = useState('engagement');
   const [user] = useState({ email: 'demo@example.com' });
 
   const handleSignOut = () => {
@@ -61,12 +61,6 @@ export default function Dashboard() {
             </div>
             <div className="hidden md:flex items-center gap-2">
               <button
-                className={`nav-item ${activeTab === 'exchange' ? 'active' : ''}`}
-                onClick={() => setActiveTab('exchange')}
-              >
-                Exchange
-              </button>
-              <button
                 className={`nav-item ${activeTab === 'engagement' ? 'active' : ''}`}
                 onClick={() => setActiveTab('engagement')}
               >
@@ -83,6 +77,12 @@ export default function Dashboard() {
                 onClick={() => setActiveTab('rewards')}
               >
                 Rewards
+              </button>
+              <button
+                className={`nav-item ${activeTab === 'exchange' ? 'active' : ''}`}
+                onClick={() => setActiveTab('exchange')}
+              >
+                Exchange
               </button>
               <button
                 className={`nav-item ${activeTab === 'staking' ? 'active' : ''}`}

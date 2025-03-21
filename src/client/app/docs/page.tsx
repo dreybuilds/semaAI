@@ -52,7 +52,7 @@ export default function Docs() {
                 <div>
                   <h3 className="text-xl font-semibold mb-3">Step 1: Add the SemaAI Bot to Your Telegram Group</h3>
                   <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                    <li>Open Telegram and search for the <span className="font-mono">@SemaAI_Bot</span></li>
+                    <li>Open Telegram and search for the <span className="font-mono">@sema_AI_Bot</span></li>
                     <li>Click <strong>Start</strong> to initiate a chat with the bot</li>
                     <li>Type <span className="font-mono">/addgroup</span> and follow the instructions</li>
                   </ol>
@@ -99,7 +99,7 @@ export default function Docs() {
                 <div>
                   <h3 className="text-xl font-semibold mb-3">Step 1: Invite the SemaAI Bot to Your Server</h3>
                   <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                    <li>Visit the <a href="https://discord.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&scope=bot" className="text-primary hover:underline">SemaAI Bot Invite Link</a></li>
+                    <li>Visit the <a href="https://discord.com/oauth2/authorize?client_id=1343910066050306089" className="text-primary hover:underline">SemaAI Bot Invite Link</a></li>
                     <li>Select your server from the dropdown menu</li>
                     <li>Click <strong>Authorize</strong> and complete verification</li>
                   </ol>
@@ -168,7 +168,7 @@ export default function Docs() {
                     <li>Automatic updates will be posted in your group/server</li>
                     <li>Use <span className="font-mono">@sema_score</span> command for detailed analysis:
                       <pre className="bg-secondary p-2 rounded-lg mt-2 overflow-x-auto">
-                        @sema_score https://twitter.com/SemaAI_Official/status/123456789
+                        @sema_score https://twitter.com/@sema_score
                       </pre>
                     </li>
                     <li>View engagement metrics, sentiment analysis, and staking activity</li>
