@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 267 50% 98%;
+  --foreground: 224 71% 4%;
+  --card: 0 0% 100%;
+  --card-foreground: 224 71% 4%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 224 71% 4%;
+  --primary: 267 100% 65%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 267 50% 96%;
+  --secondary-foreground: 224 71% 4%;
+  --muted: 267 50% 96%;
+  --muted-foreground: 267 30% 40%;
+  --accent: 267 50% 96%;
+  --accent-foreground: 224 71% 4%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 267 50% 92%;
+  --input: 267 50% 92%;
+  --ring: 267 100% 65%;
+  --radius: 1rem;
+}
+
+body {
+  @apply bg-background text-foreground;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--secondary));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary));
+  border-radius: 4px;
+  opacity: 0.5;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary));
+  opacity: 0.8;
+}
+
+/* Token input styles */
+.token-input-container {
+  @apply relative flex items-center gap-2 rounded-2xl bg-secondary p-4 hover:bg-secondary/80 transition-colors;
+}
+
+.token-input {
+  @apply bg-transparent text-2xl font-medium focus:outline-none w-full;
+}
+
+.token-select-button {
+  @apply flex items-center gap-2 rounded-full bg-muted px-3 py-1.5 hover:bg-muted/80 transition-colors;
+}
+
+/* Navigation styles */
+.nav-item {
+  @apply px-4 py-2 rounded-full hover:bg-secondary transition-colors;
+}
+
+.nav-item.active {
+  @apply bg-secondary;
+}
