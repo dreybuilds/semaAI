@@ -18,28 +18,12 @@ export default function Home() {
           <div className="flex items-center gap-4">
             <div className="flex gap-4">
               <a
-                href="https://twitter.com"
+                href="https://twitter.com/sema_score"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-primary"
               >
                 <Twitter className="h-5 w-5" />
-              </a>
-              <a
-                href="https://discord.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-primary"
-              >
-                <MessageCircle className="h-5 w-5" />
-              </a>
-              <a
-                href="https://telegram.org"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-primary"
-              >
-                <Send className="h-5 w-5" />
               </a>
             </div>
             <Link href="/docs">
