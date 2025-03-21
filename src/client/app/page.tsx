@@ -81,6 +81,16 @@ export default function Home() {
           </div>
         </div>
       </main>
+
+      {/* Footer */}
+      <footer className="border-t border-border/40 py-6">
+        <div className="container mx-auto px-4">
+          <div className="flex justify-center gap-6 text-sm text-muted-foreground">
+            <Link href="/legal/terms" className="hover:text-primary">Terms of Service</Link>
+            <Link href="/legal/privacy" className="hover:text-primary">Privacy Policy</Link>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
