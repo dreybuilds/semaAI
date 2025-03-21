@@ -1,0 +1,36 @@
+{
+  "name": "semaai",
+  "version": "1.0.0",
+  "description": "**SemaAI** is a decentralized platform designed to solve the **Engagement Paradox** in the Web2 social ecosystem. By combining blockchain technology, AI agents, and dynamic tokenomics, SemaAI enables creators and users to receive fair rewards for their contributions to digital ecosystems. SemaAI redefines social media engagement, ensuring that value is distributed directly to creators and participants, rather than captured solely by centralized platforms. The platform allows users to stake tokens, validate engagements, and invest in content creation, bridging the creator-community divide that exists in Web2.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dreybuilds/semaAI.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/dreybuilds/semaAI/issues"
+  },
+  "homepage": "https://github.com/dreybuilds/semaAI#readme",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
+    "passport-oauth2": "^1.8.0",
+    "pg": "^8.14.0"
+  }
+}
